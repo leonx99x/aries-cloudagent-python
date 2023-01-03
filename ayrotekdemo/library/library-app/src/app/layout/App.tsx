@@ -10,12 +10,12 @@ import {
   BrowserRouter as Router,
   useRoutes
 } from 'react-router-dom';
-import SchemaPage from '../../features/schema/SchemaPage';
+import Connections from '../../features/connections/Connections';
 
 function App() {
   let routes = useRoutes([
-    { path: "/", element: <SchemaPage /> },
-    { path: "schemes", element: <SchemaPage /> }
+    { path: "/", element: <Connections /> },
+    { path: "verify", element: <Connections /> }
     // ...
   ]);
   return routes;
