@@ -1,0 +1,83 @@
+#!/bin/bash
+
+cd "$(dirname "$0")" || exit 1
+
+read -p "Enter the container runtime (default: docker): " CONTAINER_RUNTIME
+CONTAINER_RUNTIME="${CONTAINER_RUNTIME:-docker}"
+
+$CONTAINER_RUNTIME build -t aries-cloudagent-run -f ../docker/Dockerfile.run .. || exit 1
+
+ARGS=""
+
+read -p "Enter the ports (separated by space): " PORTS
+for PORT in $PORTS; do
+  case $PORT in
+    *:*) ;;
+    *) PORT="$PORT:$PORT" ;;
+  esac
+  ARGS="${ARGS} -p $PORT"
+done
+
+read -p "Enter the environment variables (separated by space): " ENV_VARS
+for ENV_VAR in $ENV_VARS; do
+  ARGS="${ARGS} -e $ENV_VAR"
+done
+
+read -p "Enter the PTVSD port (default: 5678): " PTVSD_PORT
+PTVSD_PORT="${PTVSD_PORT-5678}"
+
+for arg in "$@"; do
+  if [ "$arg" = "--debug" ]; then
+    ENABLE_PTVSD=1
+  fi
+  if [ "$arg" = "upgrade" ]; then
+    read -p "Do you wish to proceed with database backup before running aca-py upgrade (Y/N)? " yn
+    case $yn in
+      [Yy]*) break ;;
+      [Nn]*) exit ;;
+    esac
+  fi
+done
+
+if [ -n "${ENABLE_PTVSD}" ]; then
+  ARGS="${ARGS} -e ENABLE_PTVSD=\"${ENABLE_PTVSD}\" -p $PTVSD_PORT:$PTVSD_PORT"
+fi
+
+ARGS="${ARGS} -v $(pwd)/../logs:/home/indy/logs"
+
+read -p "Enter the webhook URL: " WEBHOOK_URL
+if [ -n "${WEBHOOK_URL}" ]; then
+  ARGS="${ARGS} -e WEBHOOK_URL=\"${WEBHOOK_URL}\""
+fi
+
+if [ "$OSTYPE" == "msys" ]; then
+  CONTAINER_RUNTIME="winpty docker"
+fi
+
+read -p "Enter the container name: " CONTAINER_NAME
+if [ -n "${CONTAINER_NAME}" ]; then
+  ARGS="${ARGS} --name ${CONTAINER_NAME}"
+else
+  RAND_NAME=$(env LC_ALL=C tr -dc 'a-zA-Z0-9' </dev/urandom | fold -w 16 | head -n 1)
+  CONTAINER_NAME="aries-cloudagent-runner_${RAND_NAME}"
+  ARGS="${ARGS} --name ${CONTAINER_NAME}"
+fi
+echo "Container name: ${CONTAINER_NAME}"
+
+read -p "Enter the Docker network name: " NETWORK_NAME
+
+# Create new Docker network if it does not exist.
+if [ -n "${NETWORK_NAME}" ]; then
+  if [ -z "$("$CONTAINER_RUNTIME" network ls --filter name=^"${NETWORK_NAME}"$ --format="{{ .Name }}")" ]; then
+    echo "Creating new Docker network: ${NETWORK_NAME}"
+    "$CONTAINER_RUNTIME" network create "${NETWORK_NAME}"
+  else
+    echo "Attaching to existing Docker network: ${NETWORK_NAME}"
+  fi
+  ARGS="${ARGS} --network ${NETWORK_NAME}"
+else
+  echo "No Docker network specified."
+fi
+echo ""
+
+$CONTAINER_RUNTIME run --rm -ti $ARGS aries-cloudagent-run "$@"

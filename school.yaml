@@ -1,0 +1,69 @@
+label: School
+invite-label: School (Admin)
+wallet-name: school
+endpoint:
+          - http://31.169.73.201:8020
+          - ws://31.169.73.201:8020
+inbound-transport:
+          - [http, 0.0.0.0, 8020]
+admin: [0.0.0.0, 8021]
+
+# Load toolbox plugin
+# plugin:
+#   - acapy_plugin_toolbox
+
+# Transport
+outbound-transport: http
+
+#Ledger
+#Use Local Net
+genesis-url: http://31.169.73.233:9000/genesis
+
+#Admin
+admin-insecure-mode: true
+
+# Connections
+debug-connections: true
+debug-credentials: true
+log-level: DEBUG
+debug: true
+auto-accept-invites: true
+auto-accept-requests: true
+auto-respond-messages: true
+auto-ping-connection: true
+auto-accept-intro-invitation-requests: true
+connections-invite: true
+invite-metadata-json: '{"group": "admin"}'
+
+#  Credentials and Presentations
+preserve-exchange-records: true
+auto-store-credential: true
+auto-respond-credential-proposal: true
+auto-respond-credential-offer: true
+auto-respond-credential-request: true
+#
+auto-respond-presentation-proposal: true
+auto-respond-presentation-request: true
+auto-verify-presentation: true
+#
+#   tails-server-base-url: http://31.169.73.201:9005
+#
+#Mediation
+mediator-invitation: https://public.mediator.indiciotech.io?c_i=eyJAdHlwZSI6ICJkaWQ6c292OkJ6Q2JzTlloTXJqSGlxWkRUVUFTSGc7c3BlYy9jb25uZWN0aW9ucy8xLjAvaW52aXRhdGlvbiIsICJAaWQiOiAiMDVlYzM5NDItYTEyOS00YWE3LWEzZDQtYTJmNDgwYzNjZThhIiwgInNlcnZpY2VFbmRwb2ludCI6ICJodHRwczovL3B1YmxpYy5tZWRpYXRvci5pbmRpY2lvdGVjaC5pbyIsICJyZWNpcGllbnRLZXlzIjogWyJDc2dIQVpxSktuWlRmc3h0MmRIR3JjN3U2M3ljeFlEZ25RdEZMeFhpeDIzYiJdLCAibGFiZWwiOiAiSW5kaWNpbyBQdWJsaWMgTWVkaWF0b3IifQ==
+# Wallet
+# ledger-pool-name:
+wallet-type: indy
+wallet-name: schoolwallet
+wallet-key: iklfu93scfof8IaIvRWE5gnlunu5ykMk
+seed: sauNpyxT6se03Pt76X9ypxSiS7h2EIMy
+replace-public-did: true
+auto-provision: true
+recreate-wallet : true
+#
+#  Endorsement
+endorser-protocol-role: endorser
+#
+#
+#    Enable undelivered queue
+#    Important for communication with toolbox over http (as opposed to ws)
+enable-undelivered-queue: true
