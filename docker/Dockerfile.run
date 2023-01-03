@@ -12,6 +12,8 @@ RUN pip3 install --no-cache-dir \
 
 RUN mkdir aries_cloudagent && touch aries_cloudagent/__init__.py
 ADD aries_cloudagent/version.py aries_cloudagent/version.py
+ADD school.yaml ./
+ADD library.yaml ./
 ADD bin ./bin
 ADD README.md ./
 ADD setup.py ./
