@@ -11,11 +11,13 @@ import {
   useRoutes
 } from 'react-router-dom';
 import SchemaPage from '../../features/schema/SchemaPage';
+import ConnectionPage from '../../features/connection/ConnectionPage';
 
 function App() {
   let routes = useRoutes([
     { path: "/", element: <SchemaPage /> },
-    { path: "schemes", element: <SchemaPage /> }
+    { path: "schemes", element: <SchemaPage /> },
+    { path: "connection", element: <ConnectionPage /> }
     // ...
   ]);
   return routes;

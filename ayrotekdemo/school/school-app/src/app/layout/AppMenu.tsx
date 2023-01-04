@@ -9,17 +9,11 @@ function AppMenu() {
     return (
         <Menu secondary inverted size='huge' style={{ backgroundColor: '#333', color: '#fff' }}>
             {/* Increase the weight of the font to make it more readable */}
-            <Menu.Item as="a" href="/ids" icon="id card outline" fontWeight="bold">
-                Kimlikler
-            </Menu.Item>
             <Menu.Item as="a" href="/schemes" icon="sitemap" fontWeight="bold">
                 Şemalar
             </Menu.Item>
             <Menu.Item as="a" href="/issuance" icon="address card" fontWeight="bold">
                 Kimlikleme
-            </Menu.Item>
-            <Menu.Item as="a" href="/records" icon="phone" fontWeight="bold">
-                Kayıtlar
             </Menu.Item>
             <Menu.Item as="a" href="/connection" fontWeight="bold">
                 Bağlantı

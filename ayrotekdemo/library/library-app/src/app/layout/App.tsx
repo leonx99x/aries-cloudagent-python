@@ -11,11 +11,13 @@ import {
   useRoutes
 } from 'react-router-dom';
 import Connections from '../../features/connections/Connections';
+import ConnectionPage from '../../features/connection/ConnectionPage';
 
 function App() {
   let routes = useRoutes([
     { path: "/", element: <Connections /> },
-    { path: "verify", element: <Connections /> }
+    { path: "verify", element: <Connections /> },
+    { path: "connection", element: <ConnectionPage /> }
     // ...
   ]);
   return routes;
