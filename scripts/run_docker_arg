@@ -1,4 +1,5 @@
 #!/bin/bash
+# Author: Koray Cil
 
 cd "$(dirname "$0")" || exit 1
 
