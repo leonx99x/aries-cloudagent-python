@@ -4,3 +4,37 @@ body {
 .ui.inverted.top.fixed.menu {
     background-image: linear-gradient(135deg, rgb(24,42,115) 0%, rgb(33,138,174) 69%, rgb(32,167,172)89%) !important;
 }
+
+
+ .card {
+  width: 100%;
+  background-color: red;
+}
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ui.card:last-child {
+  max-width: 700px;
+}
+
+.ui.celled.table {
+  width: 50%;
+  margin: 0 auto;
+  border: 1px solid #ddd;
+  border-collapse: collapse;
+  border-spacing: 0;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #333;
+  background-color: #fff;
+}
+.ui.table thead tr:first-child>th:only-child{
+  text-align: center;
+}
+
+.list-content {
+  width: 60%;
+}
